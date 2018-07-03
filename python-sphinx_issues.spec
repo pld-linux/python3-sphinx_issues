@@ -7,7 +7,7 @@ Summary:	Sphinx extension for linking to your project's issue tracker
 Summary(pl.UTF-8):	Rozszerzenie Sphinksa do dowiązań do systemu śledzenia problemów projektu
 Name:		python-sphinx_issues
 Version:	0.3.1
-Release:	1
+Release:	2
 License:	MIT
 Group:		Libraries/Python
 Source0:	https://files.pythonhosted.org/packages/source/s/sphinx-issues/sphinx-issues-%{version}.tar.gz
