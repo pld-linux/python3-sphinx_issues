@@ -2,26 +2,35 @@
 # Conditional build:
 %bcond_without	python2 # CPython 2.x module
 %bcond_without	python3 # CPython 3.x module
+%bcond_with	tests	# unit tests [not included in release tarball]
 
 Summary:	Sphinx extension for linking to your project's issue tracker
 Summary(pl.UTF-8):	Rozszerzenie Sphinksa do dowiązań do systemu śledzenia problemów projektu
 Name:		python-sphinx_issues
-Version:	0.3.1
-Release:	2
+Version:	1.2.0
+Release:	1
 License:	MIT
 Group:		Libraries/Python
+#Source0-Download: https://pypi.org/simple/sphinx-issues/
 Source0:	https://files.pythonhosted.org/packages/source/s/sphinx-issues/sphinx-issues-%{version}.tar.gz
-# Source0-md5:	f0903a1b071fb8d19c434e36f8eac3dc
+# Source0-md5:	0f40881c9c95c40c6e752abce61882cc
 URL:		https://github.com/sloria/sphinx-issues
 BuildRequires:	rpm-pythonprov
 BuildRequires:	rpmbuild(macros) >= 1.714
 %if %{with python2}
 BuildRequires:	python-modules >= 1:2.7
 BuildRequires:	python-setuptools
+%if %{with tests}
+BuildRequires:	python-mock
+BuildRequires:	python-pytest
+%endif
 %endif
 %if %{with python3}
-BuildRequires:	python3-modules >= 1:3.3
+BuildRequires:	python3-modules >= 1:3.5
 BuildRequires:	python3-setuptools
+%if %{with tests}
+BuildRequires:	python3-pytest
+%endif
 %endif
 Requires:	python-modules >= 1:2.7
 BuildArch:	noarch
@@ -42,7 +51,7 @@ GitHub (ale działa także z innymi serwisami).
 Summary:	Sphinx extension for linking to your project's issue tracker
 Summary(pl.UTF-8):	Rozszerzenie Sphinksa do dowiązań do systemu śledzenia problemów projektu
 Group:		Libraries/Python
-Requires:	python3-modules >= 1:3.3
+Requires:	python3-modules >= 1:3.5
 
 %description -n python3-sphinx_issues
 A Sphinx extension for linking to your project's issue tracker.
