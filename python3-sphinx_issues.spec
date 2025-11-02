@@ -1,26 +1,29 @@
 #
 # Conditional build:
-%bcond_with	tests	# unit tests [not included in sdist]
+%bcond_without	tests	# unit tests
 
 Summary:	Sphinx extension for linking to your project's issue tracker
 Summary(pl.UTF-8):	Rozszerzenie Sphinksa do dowiązań do systemu śledzenia problemów projektu
 Name:		python3-sphinx_issues
-Version:	3.0.1
-Release:	3
+Version:	5.0.1
+Release:	1
 License:	MIT
 Group:		Libraries/Python
 #Source0-Download: https://pypi.org/simple/sphinx-issues/
-Source0:	https://files.pythonhosted.org/packages/source/s/sphinx-issues/sphinx-issues-%{version}.tar.gz
-# Source0-md5:	e2351ac5790c84b8fe9f13da294f69f1
+Source0:	https://files.pythonhosted.org/packages/source/s/sphinx-issues/sphinx_issues-%{version}.tar.gz
+# Source0-md5:	1c258ed2f810fd43b2ab4b1825d97c35
 URL:		https://github.com/sloria/sphinx-issues
-BuildRequires:	python3-modules >= 1:3.6
-BuildRequires:	python3-setuptools
+BuildRequires:	python3-build
+BuildRequires:	python3-flit_core < 4
+BuildRequires:	python3-installer
+BuildRequires:	python3-modules >= 1:3.9
 %if %{with tests}
+BuildRequires:	python3-Sphinx
 BuildRequires:	python3-pytest >= 6.2.0
 %endif
 BuildRequires:	rpm-pythonprov
-BuildRequires:	rpmbuild(macros) >= 1.714
-Requires:	python3-modules >= 1:3.6
+BuildRequires:	rpmbuild(macros) >= 2.044
+Requires:	python3-modules >= 1:3.9
 BuildArch:	noarch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -36,15 +39,21 @@ problemów, jak i profili użytkowników; ma wbudowaną obsługę serwisu
 GitHub (ale działa także z innymi serwisami).
 
 %prep
-%setup -q -n sphinx-issues-%{version}
+%setup -q -n sphinx_issues-%{version}
 
 %build
-%py3_build
+%py3_build_pyproject
+
+%if %{with tests}
+PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 \
+PYTHONPATH=$(pwd)/src \
+%{__python3} -m pytest tests
+%endif
 
 %install
 rm -rf $RPM_BUILD_ROOT
 
-%py3_install
+%py3_install_pyproject
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -52,6 +61,5 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(644,root,root,755)
 %doc LICENSE README.rst
-%{py3_sitescriptdir}/sphinx_issues.py
-%{py3_sitescriptdir}/__pycache__/sphinx_issues.cpython-*.py[co]
-%{py3_sitescriptdir}/sphinx_issues-%{version}-py*.egg-info
+%{py3_sitescriptdir}/sphinx_issues
+%{py3_sitescriptdir}/sphinx_issues-%{version}.dist-info
