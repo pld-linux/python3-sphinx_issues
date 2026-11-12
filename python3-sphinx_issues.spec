@@ -5,25 +5,25 @@
 Summary:	Sphinx extension for linking to your project's issue tracker
 Summary(pl.UTF-8):	Rozszerzenie Sphinksa do dowiązań do systemu śledzenia problemów projektu
 Name:		python3-sphinx_issues
-Version:	5.0.1
+Version:	6.0.0
 Release:	1
 License:	MIT
 Group:		Libraries/Python
 #Source0-Download: https://pypi.org/simple/sphinx-issues/
 Source0:	https://files.pythonhosted.org/packages/source/s/sphinx-issues/sphinx_issues-%{version}.tar.gz
-# Source0-md5:	1c258ed2f810fd43b2ab4b1825d97c35
+# Source0-md5:	67ea217c87a9f9484b3a48e91d9f574a
 URL:		https://github.com/sloria/sphinx-issues
 BuildRequires:	python3-build
 BuildRequires:	python3-flit_core < 4
 BuildRequires:	python3-installer
-BuildRequires:	python3-modules >= 1:3.9
+BuildRequires:	python3-modules >= 1:3.10
 %if %{with tests}
-BuildRequires:	python3-Sphinx
+BuildRequires:	python3-Sphinx >= 8.1.0
 BuildRequires:	python3-pytest >= 6.2.0
 %endif
 BuildRequires:	rpm-pythonprov
 BuildRequires:	rpmbuild(macros) >= 2.044
-Requires:	python3-modules >= 1:3.9
+Requires:	python3-modules >= 1:3.10
 BuildArch:	noarch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
